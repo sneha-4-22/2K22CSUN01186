@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CssBaseline, Box } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
+import DataProvider from './context/DataContext';
+
+// Components
+import Navbar from './components/Navbar';
+
+// Pages
+import TopUsers from './pages/TopUsers';
+import TrendingPosts from './pages/TrendingPosts';
+import Feed from './pages/Feed';
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  const handleClick = () => {
-    setCount(prev => prev + 1);
-  };
-
   return (
-    <div style={styles.container}>
-      <h1>Hello, React!</h1>
-      <p>You clicked {count} times 💖</p>
-      <button onClick={handleClick} style={styles.button}>Click Me</button>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <DataProvider>
+        <Router>
+          <Navbar />
+          <Box component="main" sx={{ pt: 2, pb: 4 }}>
+            <Routes>
+              <Route path="/" element={<Feed />} />
+              <Route path="/top-users" element={<TopUsers />} />
+              <Route path="/trending" element={<TrendingPosts />} />
+            </Routes>
+          </Box>
+        </Router>
+      </DataProvider>
+    </ThemeProvider>
   );
 }
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    marginTop: '50px',
-    fontFamily: 'Arial, sans-serif'
-  },
-  button: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    background: '#007BFF',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer'
-  }
-};
 
 export default App;
